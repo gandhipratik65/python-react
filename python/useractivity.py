@@ -57,3 +57,19 @@ centers = kmeans.cluster_centers_
 plt.scatter(X[:, 0], X[:, 1], c=labels, s=50, cmap='viridis')
 plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 plt.show()
+
+
+# Create a correlation matrix
+corr_matrix = df.corr()
+
+# Select the features with correlation higher than a threshold value
+threshold = 0.5
+corr_features = set()
+for i in range(len(corr_matrix.columns)):
+    for j in range(i):
+        if abs(corr_matrix.iloc[i, j]) > threshold:
+            colname = corr_matrix.columns[i]
+            corr_features.add(colname)
+
+# Print the selected features
+print(corr_features)
