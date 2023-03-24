@@ -4,9 +4,10 @@ from bmi import *
 app = Flask(__name__)
 
 
-@app.route('/calculate-bmi', methods=['POST'])
+@app.route('/get/ingredient', methods=['POST'])
 def calculate_bmi():
-    age = request.json['age']
+    uuid = request.json['uuid']
+    mealPreference = request.json['mealPreference']
     gender = request.json['gender']
     height = request.json['height']
     weight = request.json['weight']
@@ -37,11 +38,47 @@ def calculate_bmi():
         femaleIndex = 1
         maleIndex = 0
 
-    result = trained_model([[height, weight, index, femaleIndex, maleIndex]])
+    prediction = trained_model(
+        [[height, weight, index, femaleIndex, maleIndex]])
+    ingrdient = []
+    if (mealPreference == 'Veg'):
+
+        if prediction == 0:
+            ingrdient = ['Apple', 'Tofu']
+        elif prediction == 1:
+            ingrdient = ['Brown Rice', 'Oats', 'Milk', 'Sweet Potatoes']
+        elif prediction == 2:
+            ingrdient = ['Gavar Aur Masoor Ki Dal', 'Jowar Methi Roti']
+        elif prediction == 3:
+            ingrdient = ['A Vegie Burger With made with a whole grain bun']
+        elif prediction == 4:
+            ingrdient = ['whole grains', 'legumes',
+                         'nuts & seeds', 'avocado', 'olive oil']
+        elif prediction == 5:
+            ingrdient = ['beans', 'lentils', 'quinoa', 'tofu', 'nuts', 'seeds']
+
+    elif (mealPreference == 'Non Veg'):
+        if prediction == 0:
+            ingrdient = ['Chicken Nuggets', 'Eggs']
+        elif prediction == 1:
+            ingrdient = ['Eggs', 'Chicken Breast', 'Shrimp']
+        elif prediction == 2:
+            ingrdient = ['Egg Omelete', 'Chicken Breast',
+                         'Shrimp', 'Eggs', 'Turkey Breast']
+        elif prediction == 3:
+            ingrdient = ['Grilled Chicken Breast',
+                         'Eggs Omelete', 'A grilled salmon']
+        elif prediction == 4:
+            ingrdient = ['poultry', 'fish & lean cuts of red meat']
+        elif prediction == 5:
+            ingrdient = ['chicken', 'fish', 'turkey', 'lean cuts of beef']
 
     # return results
     return jsonify({
-        'result': result
+        'ingrdient': ingrdient,
+        'uuid': uuid,
+        'mealPreference': mealPreference
+
     })
 
 
