@@ -43,20 +43,4 @@ def trained_model(fname):
     print('Predicted nutrition classifications:')
     print(y_pred)
 
-    result = ''
-    if y_pred == 0:
-        result = 'High calorie and protin'
-    elif y_pred == 1:
-        result = 'Complex carbohydrates and high protein '
-    elif y_pred == 2:
-        result = 'Macronutrients and fiber'
-    elif y_pred == 3:
-        result = 'Frunit, whole grains, lean protin and healthy fats'
-    elif y_pred == 4:
-        result = 'whole foods, low unhealthy fats, water, low sugar and low refined carbohydrates'
-    elif y_pred == 5:
-        result = 'Protin shakes, protin bars, increase protin index, Focus on whole foods, low unhealthy fats, water, low sugar and low refined carbohydrates'
-
-    print(result)
-
-    return result
+    return y_pred
