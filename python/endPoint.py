@@ -1,7 +1,11 @@
 from flask import Flask, jsonify, request
 from bmi import *
+from flask import Flask
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/get/ingredient', methods=['POST'])
@@ -9,8 +13,8 @@ def calculate_bmi():
     uuid = request.json['uuid']
     mealPreference = request.json['mealPreference']
     gender = request.json['gender']
-    height = request.json['height']
-    weight = request.json['weight']
+    height = int(request.json['height'])
+    weight = int(request.json['weight'])
 
     # perform calculations
     bmi = weight / ((height/100) ** 2)
