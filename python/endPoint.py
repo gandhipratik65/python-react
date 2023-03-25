@@ -11,7 +11,7 @@ CORS(app)
 @app.route('/get/ingredient', methods=['POST'])
 def calculate_bmi():
     uuid = request.json['uuid']
-    mealPreference = request.json['mealPreference']
+    mealPreference = request.json['meal_preference']
     gender = request.json['gender']
     height = int(request.json['height'])
     weight = int(request.json['weight'])
@@ -45,7 +45,7 @@ def calculate_bmi():
     prediction = trained_model(
         [[height, weight, index, femaleIndex, maleIndex]])
     ingrdient = []
-    if (mealPreference == 'Veg'):
+    if (mealPreference == 'vegetarian'):
 
         if prediction == 0:
             ingrdient = ['Apple', 'Tofu']
@@ -61,7 +61,7 @@ def calculate_bmi():
         elif prediction == 5:
             ingrdient = ['beans', 'lentils', 'quinoa', 'tofu', 'nuts', 'seeds']
 
-    elif (mealPreference == 'Non Veg'):
+    elif (mealPreference == 'non-vegetarian'):
         if prediction == 0:
             ingrdient = ['Chicken Nuggets', 'Eggs']
         elif prediction == 1:
@@ -76,12 +76,26 @@ def calculate_bmi():
             ingrdient = ['poultry', 'fish & lean cuts of red meat']
         elif prediction == 5:
             ingrdient = ['chicken', 'fish', 'turkey', 'lean cuts of beef']
+    elif (mealPreference == 'vegan'):
+        if prediction == 0:
+            ingrdient = ['Nuts','Legumes','Tofu']
+        elif prediction == 1:
+            ingrdient = ['Brown Rice', 'Whole Wheat Pasta','Oats']
+        elif prediction == 2:
+            ingrdient = ['Lentils','Chia','Oats']
+        elif prediction == 3:
+            ingrdient = ['Nut Butter Wrap','Tofu Stir','Avocado']
+        elif prediction == 4:
+            ingrdient = ['Vegetable Stir','Roasted Sweet Potatoes','Chickpea Salad']
+        elif prediction == 5:
+            ingrdient = ['beans','lentils','chickpeas','low-sugar protein shake']
+
 
     # return results
     return jsonify({
         'ingrdient': ingrdient,
         'uuid': uuid,
-        'mealPreference': mealPreference
+        'meal_preference': mealPreference
 
     })
 
