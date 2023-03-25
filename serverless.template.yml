@@ -1,0 +1,6 @@
+name: react-pythob
+org: serverlessinc
+description: Deploys a Python Flask API service with traditional Serverless Framework
+keywords: aws, serverless, faas, lambda, python, flask
+repo: https://github.com/gandhipratik65/python-react.git
+license: MIT
